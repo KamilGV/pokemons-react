@@ -1,0 +1,28 @@
+.CardBox{
+    border: 1px solid black;
+    border-radius: 20px;
+    background-color: pink;
+    /* display: flex;
+    flex-direction: row; */
+
+
+}
+
+.ModalContainer{
+    z-index: 1;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.Modal{
+    background-color: blue;
+    color: yellow;
+
+
+
+
+}

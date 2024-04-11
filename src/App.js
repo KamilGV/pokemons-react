@@ -1,23 +1,36 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import axios from 'axios';
+import Card from './Card';
+
+let limit = 20;
+let offset = 20;
+
+
 
 function App() {
+  useEffect (()=>{getPokemons()},[])
+  const [pokemons, setPokemons] = useState([])
+  const getPokemons = async () => {
+    await axios.get(`https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset=${offset}`).then(async pokemon=>{
+      let data = await pokemon.data.results.map(async poke => {
+        const result = await axios.get(poke.url)
+        const res = result.data
+        return res
+      })
+      const result = await Promise.all(data)
+      setPokemons(result)
+    })
+  }
+
+  
+  
+  console.log(pokemons)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="GridPokemons"> 
+        {pokemons.map(pokemon => <Card pokemon={pokemon} key={pokemon.id}/>)}
+      </div>
     </div>
   );
 }
