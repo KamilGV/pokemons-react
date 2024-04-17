@@ -20,7 +20,7 @@ function Card({pokemon}) {
     return (
         <>
         <div className="CardBox" onClick={changeBackImage} style={{backgroundColor: `var(--bg-poke-color-light-${pokemon.types[0].type.name})`}}>
-            <p onClick={changeIsModal}>{pokemon.name}</p>
+            <p onClick={changeIsModal} className="pokemon-name">{pokemon.name}</p>
             <img src={imgUrl}></img>
         </div>
         {isModalOpen&&<Modal pokemon={pokemon} changeIsModal={changeIsModal}/>}
@@ -31,10 +31,27 @@ function Card({pokemon}) {
 function Modal({pokemon, changeIsModal}){
     return (
         <div className="ModalContainer">
+
             <div className="Modal">
-                <p>{pokemon.name}</p>
+                <div className="modal-header">
+                    <button onClick={changeIsModal}>Close</button>
+                </div>
+                <div className="modal-body">
+                    <p className="card-pokemon-name">{pokemon.name}</p>
+                    <div className="modal-body-stats">
+                    {pokemon.stats.map(stat => 
+                        <div className="modal-body-stats-stat">
+                            <div className="modal-body-stats-stat-name">{stat.stat.name}
+                            </div>
+                            <div className="modal-body-stats-stat-value">{stat.base_stat}</div>
+                        </div>
+                    )}
+
+                    </div>
+                </div>
+                
             </div>
-            <button onClick={changeIsModal}>Close</button>
+            
         </div>
     )
 }
